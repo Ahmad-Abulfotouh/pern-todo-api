@@ -1,15 +1,16 @@
-# Simple CRUD Todo List API App, With JWT Authintication.
+# Simple CRUD Todo List API App, With JWT Authentication.
 
 ## Built with Node, Express, TypeScript, Prisma, and PostgreSQL.
 
 this project is the backend part of a PERN stack app, and it contains:
 
-* A simple REST API in Express that serve users and there todo lists.
-* Authintication with bycript and jsonwebtoken libs.
+* A simple REST API in Express that serve users and their todo lists.
+* Authentication using bcrypt and jsonwebtoken libraries.
 
 to use this project (it will run on localhost:3000):
-* clone it on your disk.
-* in the terminal of your code editor, run: npm start.
+* Clone the repository to your local machine.
+* Install dependencies: `npm install`
+* In your terminal, run: `npm run dev` (or `npm start` for production).
 
 ## 🏗 Project Architecture
 ![High Level architecture diagram](./assets/pern-todo-api-architecture-diagram.svg)
