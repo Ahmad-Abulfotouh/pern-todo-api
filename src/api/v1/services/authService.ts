@@ -1,15 +1,23 @@
 import prisma from '../../../config/prisma.js'
-import bcrypt from 'bcryptjs';
+import { hashPassword, compareHashedPasswords } from '../../../utils/hashingUtility.js';
 
 // bcrypt accepts 'string' only, not 'String'
 export const registUser = async (email: string, password: string) => {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const isUserExist = await prisma.user.findUnique({
+        where: {
+            email: email
+        }
+    });
+    if (isUserExist) {
+        throw new Error("User already exists.");
+    }
+
+    const hashed: string = await hashPassword(password);
 
     const newUser = await prisma.user.create({
         data: {
             email: email,
-            hashedPassword: hashedPassword,
+            hashedPassword: hashed,
         },
     });
 
@@ -22,12 +30,12 @@ export const loginUser = async (email: string, password: string) => {
     });
 
     if (!user) {
-        throw new Error("المستخدم ده مش موجود أصلاً!");
+        throw new Error("User doesn't exist.");
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.hashedPassword);
+    const isPasswordValid = await compareHashedPasswords(password, user.hashedPassword);
     if (!isPasswordValid) {
-        throw new Error("كلمة السر غلط يا صاحبي!");
+        throw new Error("Wrong password.");
     }
 
     return user;

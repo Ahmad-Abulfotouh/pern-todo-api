@@ -1,4 +1,5 @@
 import prisma from '../../../config/prisma.js';
+import { hashPassword } from '../../../utils/hashingUtility.js';
 
 export const getById = async (userId: string) => {
     const user = await prisma.user.findUnique({
@@ -22,19 +23,13 @@ export const add = async (email: string, password: string) => {
     return user;
 }
 
-export const updatePasword = async (userId: string, newPassword: string) => {
+export const updatePassword = async (userId: string, newPassword: string) => {
+    const hash = await hashPassword(newPassword);
     const user = await prisma.user.update({
         where: { id: userId },
         data: {
-            hashedPassword: newPassword
+            hashedPassword: hash
         }
-    });
-    return user;
-}
-
-export const remove = async (userId: string) => {
-    const user = await prisma.user.delete({
-        where: { id: userId }
     });
     return user;
 }
