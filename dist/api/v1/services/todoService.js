@@ -1,6 +1,5 @@
 import prisma from '../../../config/prisma.js';
-
-export const getAll = async (userId: string) => {
+export const getAll = async (userId) => {
     const allTodos = await prisma.todo.findMany({
         where: { userId: userId },
         select: {
@@ -9,11 +8,10 @@ export const getAll = async (userId: string) => {
             checked: true,
             createdAt: true
         }
-    })
+    });
     return allTodos;
-}
-
-export const add = async (userId: string, content: string) => {
+};
+export const add = async (userId, content) => {
     const todo = await prisma.todo.create({
         data: {
             userId: userId,
@@ -21,14 +19,13 @@ export const add = async (userId: string, content: string) => {
         }
     });
     return todo;
-}
-
-export const update = async (todoId: number, userId: string, newData: any) => {
-    if(newData.checked) {
+};
+export const update = async (todoId, userId, newData) => {
+    if (newData.checked) {
         newData.checked = Boolean(newData.checked);
     }
     const updatedTodo = await prisma.todo.update({
-        where: { 
+        where: {
             id: todoId,
             userId: userId
         },
@@ -41,12 +38,11 @@ export const update = async (todoId: number, userId: string, newData: any) => {
         }
     });
     return updatedTodo;
-}
-
-export const remove = async (todoId: number, userId: string) => {
+};
+export const remove = async (todoId, userId) => {
     const deletedTodo = await prisma.todo.delete({
-        where: { 
-            id: todoId, 
+        where: {
+            id: todoId,
             userId: userId
         },
         select: {
@@ -54,4 +50,5 @@ export const remove = async (todoId: number, userId: string) => {
         }
     });
     return deletedTodo;
-}
+};
+//# sourceMappingURL=todoService.js.map
