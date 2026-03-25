@@ -7,6 +7,10 @@ const app = express();
 
 app.use(express.json())
 
+app.get('/', (req, res) => {
+  res.json({ message: "Welcome to PERN Todo API!" });
+});
+
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', authenticateToken, userRouter);
 app.use('/api/v1/todos', authenticateToken, todoRouter);
