@@ -2,3 +2,5 @@ import app from './app.js';
 const port = process.env.PORT || 3000;;
 
 app.listen(port, () => console.log('The server is runing on port', port));
+
+export default app;
